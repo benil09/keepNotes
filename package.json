@@ -1,0 +1,21 @@
+{
+  "name": "keepnotes",
+  "version": "1.0.0",
+  "description": "**KeepNotes** is a full-stack note-taking application that allows users to create, read, and manage their personal notes in a clean, responsive UI. Built with the MERN stack and styled using Tailwind CSS, the app offers a seamless experience with features like formatted date display, API-based data fetching, and rate-limit handling.",
+  "homepage": "https://github.com/benil09/keepNotes#readme",
+  "bugs": {
+    "url": "https://github.com/benil09/keepNotes/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benil09/keepNotes.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
+    "start":"npm run start --prefix backend"
+  }
+}
