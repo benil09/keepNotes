@@ -47,5 +47,5 @@
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/keepnotes.git
+git clone https://github.com/benil09/keepNotes.git
 cd keepnotes
