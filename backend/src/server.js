@@ -40,7 +40,7 @@ app.get("*",(req,res)=>{
 
 connectDB().then(()=>{
 
-    app.listen(PORT,(req,res)=>{
-        console.log("server started ⏿  ")
+    app.listen(PORT,()=>{
+        console.log(`server started ⏿ on  ${PORT}`)
     })
 })

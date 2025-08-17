@@ -5,33 +5,49 @@ import Navbar from "../Components/Navbar";
 import NoteCard from "../Components/NoteCard";
 import NotesLoading from "../Components/NotesLoading";
 import RateLimited from "../Components/RateLimited";
+import api from "../lib/axios";
 
 const HomePage = () => {
   const [isRateLimited, setIsRateLimited] = useState(false);
   const [notes, setNotes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchNotes = async () => {
-      try {
-        const res = await axios.get("/notes");
-        console.log(res.data);
+  console.log(notes.length)
+
+useEffect(() => {
+  const fetchNotes = async () => {
+    try {
+      // Make sure to replace with your backend URL if needed
+      const res = await api.get("/notes");
+      console.log("Fetched data from backend:", res.data);
+
+      // Check if res.data.notes exists and is an array
+      if (Array.isArray(res.data.notes)) {
+        setNotes(res.data.notes);
+      } else if (Array.isArray(res.data)) {
+        // If backend returns an array directly
         setNotes(res.data);
-        setIsLoading(false);
-        setIsRateLimited(false);
-      } catch (error) {
-        console.log("Error in fetching notes", error);
-        if (error.response.status === 429) {
-          setIsRateLimited(true);
-        } else {
-          toast.error("Failed to load notes");
-        }
-      } finally {
-        setIsLoading(false);
+      } else {
+        setNotes([]);
+        console.warn("Notes format is unexpected:", res.data);
       }
-    };
-    fetchNotes();
-  }, []);
+
+      setIsRateLimited(false);
+    } catch (error) {
+      console.error("Error fetching notes:", error);
+
+      if (error.response && error.response.status === 429) {
+        setIsRateLimited(true);
+      } else {
+        toast.error("Failed to load notes. Check console for details.");
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  fetchNotes();
+}, []);
 
   return (
     <div className="min-h-screen">
@@ -48,12 +64,7 @@ const HomePage = () => {
         {notes.length > 0 && !isRateLimited && (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {notes.map((note) => (
-              <NoteCard
-                key={note._id}
-                id={note._id}
-                note={note}
-                setNotes={setNotes}
-              />
+              <NoteCard key={note._id} note={note} setNotes={setNotes} />
             ))}
           </div>
         )}
