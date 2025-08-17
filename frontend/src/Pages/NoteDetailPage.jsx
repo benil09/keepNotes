@@ -31,7 +31,7 @@ const NoteDetailPage = () => {
   }, [id]);
 
   const handleDelete = async () => {
-    if (!window.confirm("Are you sure you want to delete this note?")) return;
+   if (!window.confirm("Are you sure you want to delete this note?")) return;
 
     try {
       await api.delete(`/notes/${id}`);
@@ -40,7 +40,7 @@ const NoteDetailPage = () => {
     } catch (error) {
       console.log("Error deleting the note:", error);
       toast.error("Failed to delete note");
-    }
+    } 
   };
 
   const handleSave = async () => {
